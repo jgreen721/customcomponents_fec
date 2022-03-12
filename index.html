@@ -103,6 +103,7 @@
             .img-div{
               height:50%;
               width:100%;
+              position:relative;
             }
 
             .bottom-div{
@@ -119,15 +120,33 @@
             .logo-img{
               height:100%;
               width:100%;
+              cursor:pointer;
             }
+
 
             .creator, .policy, .value{
               cursor:pointer;
+            }
+
+            .overlay{
+              height:100%;
+              position:absolute;
+              top:0;
+              left:0;
+              width:100%;
+              display:flex;
+              background:hsl(178, 100%, 50%);
+              align-items:center;
+              justify-content:center;
+              opacity:0;
+              pointer-events:none;
             }
           </style>
           <div class="card">
             <div class="img-div">
               <img class="logo-img" src="./images/image-equilibrium.jpg" alt="nft-img"/>
+              <div class="overlay teal">
+                <img src="./images/icon-view.svg" alt="img"/>
             </div>
             <h2 class="white">Equilibrium #<span class="policy"></span></h2>
             <h5 class="blue"> Our Equilibrium collection promotes balance and calm. </h5>
@@ -178,6 +197,7 @@
         $value;
         $days;
         $creator;
+        $logoImg;
         constructor() {
           super();
           this.attachShadow({ mode: "open" });
@@ -186,6 +206,7 @@
           this.$value = this.shadowRoot.querySelector(".value");
           this.$days = this.shadowRoot.querySelector(".days");
           this.$creator = this.shadowRoot.querySelector(".creator");
+          this.$logoImg = this.shadowRoot.querySelector(".img-div");
         }
 
         connectedCallback() {
@@ -202,6 +223,16 @@
           this.$value.addEventListener(
             "click",
             () => (this.value = Math.random().toFixed(3))
+          );
+          this.$logoImg.addEventListener(
+            "mouseenter",
+            () =>
+              (this.shadowRoot.querySelector(".overlay").style.opacity = "70%")
+          );
+          this.$logoImg.addEventListener(
+            "mouseleave",
+            () =>
+              (this.shadowRoot.querySelector(".overlay").style.opacity = "0")
           );
         }
 
